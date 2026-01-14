@@ -1,6 +1,6 @@
 # DWES2526ServidorJWT
 
-Servidor d'autenticació basat en JWT (JSON Web Token) implementat amb Spring Boot i base de dades SQLite.
+Servidor d'autenticació basat en JWT (JSON Web Token) implementat amb Spring Boot i base de dades SQLite per defecte, amb suport opcional per a PostgreSQL remot.
 
 ## Descripció
 
@@ -9,7 +9,7 @@ Aquest projecte proporciona un servidor REST API complet per a l'autenticació d
 ## Característiques
 
 - ✅ Autenticació basada en JWT
-- ✅ Base de dades SQLite per a emmagatzematge d'usuaris
+- ✅ Base de dades SQLite per a emmagatzematge d'usuaris (per defecte) i suport per a PostgreSQL remot
 - ✅ API REST per a gestió d'usuaris
 - ✅ Endpoints protegits amb JWT (excepte login i register)
 - ✅ Encriptació de contrasenyes amb BCrypt
@@ -23,6 +23,7 @@ Aquest projecte proporciona un servidor REST API complet per a l'autenticació d
 - Spring Data JPA
 - JWT (JSON Web Tokens) amb jjwt 0.11.5
 - SQLite 3.43.0
+- PostgreSQL (instància remota)
 - Maven
 - Java 17
 
@@ -49,7 +50,16 @@ mvn clean compile
 mvn spring-boot:run
 ```
 
-L'aplicació s'iniciarà al port 8080. La base de dades SQLite (`database.db`) es crearà automàticament al directori arrel del projecte.
+L'aplicació s'iniciarà al port 8080. La base de dades SQLite (`database.db`) es crearà automàticament al directori arrel del projecte. Si s'activa el perfil `postgres`, es connectarà a la instància configurada.
+
+4. Per utilitzar PostgreSQL (perfil `postgres`), defineix les variables d'entorn necessàries i activa el perfil:
+```bash
+export POSTGRES_URL="jdbc:postgresql://<host>:5432/<database_name>"
+export POSTGRES_USER="<usuari>"
+export POSTGRES_PASSWORD="<contrasenya>"
+export SPRING_PROFILES_ACTIVE=postgres
+mvn spring-boot:run
+```
 
 ## API Endpoints
 
@@ -202,7 +212,11 @@ curl -X DELETE http://localhost:8080/api/users/1 \
 El fitxer `src/main/resources/application.properties` conté la configuració de l'aplicació:
 
 - **Port del servidor**: 8080
-- **Base de dades**: SQLite (database.db)
+- **Base de dades**: SQLite (database.db) per defecte. Perfil addicional `postgres` al fitxer `src/main/resources/application-postgres.properties` amb les claus:
+  - `POSTGRES_URL` (o `spring.datasource.url`)
+  - `POSTGRES_USER` (o `spring.datasource.username`)
+  - `POSTGRES_PASSWORD` (o `spring.datasource.password`, obligatori; l'aplicació no arrencarà si no està definit)
+  - El perfil `postgres` utilitza `spring.jpa.hibernate.ddl-auto=validate`, per la qual cosa l'esquema ha d'existir prèviament a la base de dades remota. Pots crear-lo prèviament aplicant el DDL generat o activant temporalment `spring.jpa.hibernate.ddl-auto=update` al perfil `postgres` i després retornant a `validate`.
 - **Secret JWT**: Configurable (per defecte inclòs)
 - **Expiració del token**: 24 hores (86400000 ms)
 
