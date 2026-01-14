@@ -4,6 +4,8 @@
 [![Desenvolupat amb Spring-Boot](https://img.shields.io/badge/Desenvolupat%20amb-SpringBoot-green?&logo=springboot&logoColor=white)](https://github.com/xsastre)
 [![per en](https://img.shields.io/badge/per%20en-xsastre-red)](https://github.com/xsastre)
 [![Desenvolupat al des-2025](https://img.shields.io/badge/Desenvolupat%20al-des--2025-yellow)](https://github.com/xsastre)
+[![Utilitzant](https://img.shields.io/badge/Utilitzant-PostgreSQL-316192?logo=postgresql&logoColor=white)](https://github.com/xsastre)
+[![Utilitzant](https://img.shields.io/badge/Utilitzant-SQLite-07405E?style=flat&compact=true&logo=sqlite&logoColor=white)](https://github.com/xsastre)
 
 # DWES2526ServidorJWT
 
