@@ -15,8 +15,11 @@ Servidor d'autenticació basat en JWT (JSON Web Token) implementat amb Spring Bo
 
 Aquest projecte proporciona un servidor REST API complet per a l'autenticació d'usuaris utilitzant tokens JWT. Inclou funcionalitats de registre, login i manteniment d'usuaris (CRUD).
 
+**NOTA**: Aquest projecte també inclou un **client Angular complet** al directori `client-angular/`. Consulteu el [README del client Angular](client-angular/README.md) per més informació sobre com executar-lo.
+
 ## Característiques
 
+### Servidor Backend (Spring Boot)
 - ✅ Autenticació basada en JWT
 - ✅ Base de dades SQLite per a emmagatzematge d'usuaris (per defecte) i suport per a PostgreSQL remot
 - ✅ API REST per a gestió d'usuaris
@@ -24,6 +27,15 @@ Aquest projecte proporciona un servidor REST API complet per a l'autenticació d
 - ✅ Encriptació de contrasenyes amb BCrypt
 - ✅ Validació de dades d'entrada
 - ✅ Sessions sense estat (stateless)
+
+### Client Frontend (Angular)
+- ✅ Interfície web completa per gestionar usuaris
+- ✅ Pantalla de login i registre
+- ✅ Gestió CRUD d'usuaris (crear, editar, eliminar)
+- ✅ Disseny modern i responsive
+- ✅ Validació de formularis en temps real
+- ✅ Protecció de rutes amb guards
+- ✅ Interceptor HTTP per gestió automàtica del token JWT
 
 ## Tecnologies
 
@@ -330,6 +342,43 @@ src/
 │       └── application.properties
 └── test/
 ```
+
+## Client Angular
+
+Aquest projecte inclou un client Angular complet per interactuar amb l'API REST del servidor JWT. El client proporciona una interfície gràfica moderna per a:
+
+- 🔐 **Login i Registre d'Usuaris**
+- 👥 **Gestió Completa d'Usuaris** (crear, editar, eliminar)
+- 🎨 **Interfície Moderna i Responsive**
+- ⚡ **Protecció Automàtica de Rutes**
+- 🛡️ **Gestió Transparent del Token JWT**
+
+### Captures de Pantalla
+
+#### Pantalla de Login
+![Login](https://github.com/user-attachments/assets/4a63a9cc-e76a-4bbf-a100-dcc693961a82)
+
+#### Pantalla de Gestió d'Usuaris
+![Users Management](https://github.com/user-attachments/assets/5027e4dd-21d6-40cf-b7b3-6035fa1d8896)
+
+### Com Executar el Client Angular
+
+1. **Assegura't que el servidor Spring Boot està executant-se** al port 8080
+2. **Navega al directori del client**:
+   ```bash
+   cd client-angular
+   ```
+3. **Instal·la les dependències** (només la primera vegada):
+   ```bash
+   npm install
+   ```
+4. **Executa el client**:
+   ```bash
+   npm start
+   ```
+5. **Obre el navegador** a `http://localhost:4200`
+
+Per més informació, consulteu el [README del client Angular](client-angular/README.md).
 
 ## Llicència
 
