@@ -76,8 +76,9 @@ Content-Type: application/json
   "email": "correu@example.com"
 }
 ```
+---
 
-Exemple de com fer-ho amb curl
+#### Exemple de com fer-ho amb `curl`:
 ```bash 
 curl -X POST http://localhost:8080/api/auth/register
       -H "Content-Type: application/json"
@@ -87,13 +88,14 @@ curl -X POST http://localhost:8080/api/auth/register
            "email": "usuari@test.com"
          }'
 ```
-
+---
 **Resposta:**
 ```json
 {
   "message": "User registered successfully"
 }
 ```
+---
 
 #### Login
 ```bash
@@ -106,8 +108,9 @@ Content-Type: application/json
 }
 ```
 
-Exemple de com fer-ho amb curl
-```bash
+---
+
+#### Exemple de com fer-ho amb `curl`:
 curl -X POST http://localhost:8080/api/auth/login \
 	 -H "Content-Type: application/json" \
 	 -d '{
@@ -115,6 +118,7 @@ curl -X POST http://localhost:8080/api/auth/login \
 		  "password": "contrasenyaSegura"
 		 }'
 ```
+---
 **Resposta:**
 ```json
 {
@@ -125,6 +129,7 @@ curl -X POST http://localhost:8080/api/auth/login \
   "role": "USER"
 }
 ```
+---
 
 ### Gestió d'Usuaris (Protegits - Requereixen token JWT)
 
@@ -137,6 +142,12 @@ Authorization: Bearer <token>
 ```bash
 GET /api/users
 Authorization: Bearer <token>
+```
+---
+
+#### Exemple de com fer-ho amb `curl`:
+curl -X GET http://localhost:8080/api/users \
+     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c3VhcmlUZXN0IiwiaWF0IjoxNzY4Mzg3MzkxLCJleHAiOjE3Njg0NzM3OTF9.gq6FxqH4nW4mmn-kh6yIzoyhVhCA25e-oLnvUs8KnVQ"
 ```
 
 **Resposta:**
@@ -151,12 +162,21 @@ Authorization: Bearer <token>
   }
 ]
 ```
+---
 
 #### Obtenir usuari per ID
 ```bash
 GET /api/users/{id}
 Authorization: Bearer <token>
 ```
+---
+
+#### Exemple de com fer-ho amb `curl`:
+```bash		 
+curl -X GET http://localhost:8080/api/users/1 \
+     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c3VhcmlUZXN0IiwiaWF0IjoxNzY4Mzg3MzkxLCJleHAiOjE3Njg0NzM3OTF9.gq6FxqH4nW4mmn-kh6yIzoyhVhCA25e-oLnvUs8KnVQ"
+```
+---
 
 #### Actualitzar usuari
 ```bash
@@ -171,16 +191,52 @@ Content-Type: application/json
   "role": "ADMIN",
   "enabled": true
 }
+---
+
+#### Exemple de com fer-ho amb `curl`:
+```bash	 
+curl -X PUT http://localhost:8080/api/users/1 \
+     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c3VhcmlUZXN0IiwiaWF0IjoxNzY4Mzg3MzkxLCJleHAiOjE3Njg0NzM3OTF9.gq6FxqH4nW4mmn-kh6yIzoyhVhCA25e-oLnvUs8KnVQ" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "username": "nouNom",
+           "email": "nouCorreu@example.com",
+           "password": "novaContrasenya",
+           "role": "ADMIN",
+           "enabled": true
+         }'
 ```
-
 Tots els camps són opcionals. Només s'actualitzaran els camps proporcionats.
-
+---
 #### Eliminar usuari
 ```bash
 DELETE /api/users/{id}
 Authorization: Bearer <token>
 ```
+---
 
+#### Exemple de com fer-ho amb `curl`:
+```bash
+// Primer cream un nou usuari per després eliminar-lo
+
+curl -X POST http://localhost:8080/api/auth/register \
+     -H "Content-Type: application/json" \
+     -d '{
+           "username": "pep",
+           "password": "contrasenyaSuperSegura",
+           "email": "usuari@test2.com"
+         }'
+		 
+// Com que no ens dona l'id del nou usuari (*** Possible millora ***) obtindrem un nou llistat d'usuaris
+
+curl -X GET http://localhost:8080/api/users \
+     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c3VhcmlUZXN0IiwiaWF0IjoxNzY4Mzg4MzM1LCJleHAiOjE3Njg0NzQ3MzV9.8PSWNBAqJGaJYYkVv7N4VBtG45t7Fy4pf09A_qQeifo"
+
+// Ara que ja sabem l'id del nou usuari, ja el podrem esborrar
+curl -X DELETE http://localhost:8080/api/users/2 \
+     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c3VhcmlUZXN0IiwiaWF0IjoxNzY4Mzg4MzM1LCJleHAiOjE3Njg0NzQ3MzV9.8PSWNBAqJGaJYYkVv7N4VBtG45t7Fy4pf09A_qQeifo"
+```
+---
 **Resposta:**
 ```json
 {
@@ -188,7 +244,7 @@ Authorization: Bearer <token>
 }
 ```
 
-## Exemples d'ús amb curl
+## Recopilem tots els exemples d'ús amb curl
 
 ### Registrar un nou usuari
 ```bash
