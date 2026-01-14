@@ -147,3 +147,22 @@ Els fitxers compilats es generaran al directori `dist/client-angular` i es podra
 - Les rutes protegides redirigeixen automàticament al login si no hi ha autenticació
 - Tots els formularis tenen validació en temps real
 - Les contrasenyes mai es mostren en text pla
+
+## Consideracions de Seguretat
+
+⚠️ **Important**: Aquest projecte utilitza Angular 17.x amb finalitats **educatives**. Angular 17.x té vulnerabilitats de seguretat conegudes que només estan corregides en Angular 19+.
+
+**Per a ús en producció**, es recomana:
+- Actualitzar a Angular 19.2.18+ o superior
+- Consultar [SECURITY.md](SECURITY.md) per més detalls
+- Implementar CSP headers
+- Utilitzar HTTPS
+- Habilitar httpOnly cookies per tokens
+
+Les vulnerabilitats conegudes **NO afecten** aquest projecte perquè:
+- ✅ No utilitzem URLs protocol-relatives
+- ✅ No renderitzem SVG amb contingut dinàmic
+- ✅ No utilitzem animacions SVG o MathML
+- ✅ Tot l'input d'usuari es mostra com text
+
+Per més informació, consulteu [SECURITY.md](SECURITY.md).
