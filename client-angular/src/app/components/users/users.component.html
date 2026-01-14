@@ -1,0 +1,153 @@
+<div class="users-container">
+  <header class="header">
+    <div class="header-content">
+      <h1>Gestió d'Usuaris</h1>
+      <div class="user-info">
+        <span>Hola, {{ currentUser?.username }}</span>
+        <button class="btn-logout" (click)="logout()">Tancar Sessió</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="messages">
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      <div class="success-message" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+    </div>
+
+    <div class="users-table-container">
+      <div class="loading" *ngIf="loading && !showEditModal">
+        <p>Carregant usuaris...</p>
+      </div>
+
+      <table class="users-table" *ngIf="!loading || showEditModal">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom d'usuari</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Actiu</th>
+            <th>Accions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span class="badge" [class.badge-admin]="user.role === 'ADMIN'">
+                {{ user.role }}
+              </span>
+            </td>
+            <td>
+              <span class="status" [class.status-active]="user.enabled" [class.status-inactive]="!user.enabled">
+                {{ user.enabled ? 'Sí' : 'No' }}
+              </span>
+            </td>
+            <td>
+              <button class="btn-edit" (click)="openEditModal(user)">Editar</button>
+              <button class="btn-delete" (click)="deleteUser(user.id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="users.length === 0 && !loading" class="no-users">
+        <p>No hi ha usuaris registrats</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal per editar usuari -->
+  <div class="modal-overlay" *ngIf="showEditModal" (click)="closeEditModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Editar Usuari</h2>
+        <button class="btn-close" (click)="closeEditModal()">×</button>
+      </div>
+      
+      <form (ngSubmit)="updateUser()" #editForm="ngForm">
+        <div class="form-group">
+          <label for="edit-username">Nom d'usuari:</label>
+          <input
+            type="text"
+            id="edit-username"
+            name="username"
+            [(ngModel)]="editingUser.username"
+            class="form-control"
+            minlength="3"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="edit-email">Email:</label>
+          <input
+            type="email"
+            id="edit-email"
+            name="email"
+            [(ngModel)]="editingUser.email"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="edit-password">Nova contrasenya (opcional):</label>
+          <input
+            type="password"
+            id="edit-password"
+            name="password"
+            [(ngModel)]="editingUser.password"
+            class="form-control"
+            minlength="6"
+            placeholder="Deixa en blanc per no canviar"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="edit-role">Rol:</label>
+          <select
+            id="edit-role"
+            name="role"
+            [(ngModel)]="editingUser.role"
+            class="form-control"
+          >
+            <option value="USER">USER</option>
+            <option value="ADMIN">ADMIN</option>
+          </select>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label>
+            <input
+              type="checkbox"
+              name="enabled"
+              [(ngModel)]="editingUser.enabled"
+            />
+            Usuari actiu
+          </label>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <div class="success-message" *ngIf="successMessage">
+          {{ successMessage }}
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" (click)="closeEditModal()">Cancel·lar</button>
+          <button type="submit" class="btn-primary" [disabled]="loading">
+            {{ loading ? 'Guardant...' : 'Guardar' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

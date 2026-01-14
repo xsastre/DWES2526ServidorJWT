@@ -1,0 +1,49 @@
+<div class="login-container">
+  <div class="login-card">
+    <h1>Iniciar Sessió</h1>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div class="form-group">
+        <label for="username">Nom d'usuari:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="credentials.username"
+          required
+          class="form-control"
+          placeholder="Introdueix el teu nom d'usuari"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contrasenya:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="credentials.password"
+          required
+          class="form-control"
+          placeholder="Introdueix la teva contrasenya"
+        />
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="!loginForm.form.valid || loading"
+        class="btn-primary"
+      >
+        {{ loading ? 'Entrant...' : 'Entrar' }}
+      </button>
+    </form>
+
+    <div class="register-link">
+      <p>No tens compte? <a routerLink="/register">Registra't aquí</a></p>
+    </div>
+  </div>
+</div>
+

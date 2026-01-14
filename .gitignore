@@ -65,3 +65,8 @@ database.db
 # OS specific
 .DS_Store
 Thumbs.db
+
+# Angular
+client-angular/node_modules/
+client-angular/.angular/
+client-angular/dist/
