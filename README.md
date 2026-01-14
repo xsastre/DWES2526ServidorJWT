@@ -300,8 +300,8 @@ El fitxer `src/main/resources/application.properties` conté la configuració de
 - **Base de dades**: SQLite (database.db) per defecte. Perfil addicional `postgres` al fitxer `src/main/resources/application-postgres.properties` amb les claus:
   - `POSTGRES_URL` (o `spring.datasource.url`)
   - `POSTGRES_USER` (o `spring.datasource.username`)
-  - `POSTGRES_PASSWORD` (o `spring.datasource.password`, obligatori; l'aplicació no arrencarà si no està definit)
-  - El perfil `postgres` utilitza `spring.jpa.hibernate.ddl-auto=validate`, per la qual cosa l'esquema ha d'existir prèviament a la base de dades remota. Pots crear-lo prèviament aplicant el DDL generat o activant temporalment `spring.jpa.hibernate.ddl-auto=update` al perfil `postgres` i després retornant a `validate`.
+  - `POSTGRES_PASSWORD` (o `spring.datasource.password`; pot quedar buit si el teu servidor ho permet)
+  - El perfil `postgres` utilitza `spring.jpa.hibernate.ddl-auto=update`, per la qual cosa l'esquema es crearà automàticament al primer arrencada.
 - **Secret JWT**: Configurable (per defecte inclòs)
 - **Expiració del token**: 24 hores (86400000 ms)
 
